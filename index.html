@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Attendance System</title>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            height: 100vh;
+            background: url('qr.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            margin-top: -25px;
+        }
+        #qrcode {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Scan the QR Code to Mark Attendance</h1>
+        <div id="qrcode"></div>
+        <p>QR Code updates every <strong>50 Minutes</strong>.</p>
+    </div>
+
+    <script>
+        function generateQRCode() {
+            // Get the QR code container
+            const qrContainer = document.getElementById("qrcode");
+
+            // Clear previous QR code
+            qrContainer.innerHTML = "";
+
+            // Generate a unique URL by appending a timestamp
+            const timestamp = new Date().getTime();
+            const attendanceUrl = `https://smartattendancehack.netlify.app/?t=${timestamp}`;
+
+            // Generate new QR code
+            new QRCode(qrContainer, {
+                text: attendanceUrl,
+                width: 200,
+                height: 200,
+            });
+        }
+
+        // Generate initial QR code
+        generateQRCode();
+
+        // Update QR code every 50 seconds
+        setInterval(generateQRCode, 10000);
+    </script>
+</body>
+</html>
